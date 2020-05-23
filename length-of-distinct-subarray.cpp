@@ -15,18 +15,29 @@ int solve(vector<int> &arr) {
 	int ans = 0;
 	int start = 0;
 	
-	int i = 0;
-	while (i < arr.size() && start < arr.size()) {
+	for (int i = 0; i < arr.size(); i++) {
 		auto it = hash.find(arr[i]);
-		if (it == hash.end()) {
-			hash[arr[i]] = 1;
-			i++;
-			ans = max(ans, i-start);
-		} else {
-			hash.erase(arr[start]);
-			start++;
+		if (it != hash.end()) { // found
+			start = max(start, it->second + 1);
+			// start = max(start, it->second);
 		}
+		hash[arr[i]] = i;
+		ans = max(ans, i - start + 1);
 	}
+	
+	// time complexity = O(2n), as in the worst case each element would be visited twice
+	// int i = 0;
+	// while (i < arr.size() && start < arr.size()) {
+	// 	auto it = hash.find(arr[i]);
+	// 	if (it == hash.end()) {
+	// 		hash[arr[i]] = 1;
+	// 		i++;
+	// 		ans = max(ans, i-start);
+	// 	} else {
+	// 		hash.erase(arr[start]);
+	// 		start++;
+	// 	}
+	// }
 	
 	
 	return ans;
